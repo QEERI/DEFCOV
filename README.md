@@ -17,4 +17,4 @@ Public repository of the study "Does climate help modeling COVID-19 risk and to 
         5. SHAP_analysis.py:          script for performing the SHAP analysis
         6. process_optimization.py:   STATA do file for performing the econometric analysis
         
-        Figures were not included in the repository to avoid infringing the Copyright restrictions of the Journal were we submitted our manuscript. Once the manuscript will be accepted for publication we will update this description with the link to the paper.
+        Figures were not included in the repository to avoid infringing the Copyright restrictions of the Journal where we submitted our manuscript. Once the manuscript will be accepted for publication we will update this description with the link to the paper.
