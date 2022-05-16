@@ -10,7 +10,7 @@ Created on Wed Apr 13 13:39:11 2022
         Hamad Bin Khalifa University (HBKU), Qatar Foundation, 
         P.O. Box 34110, Doha, Qatar
         
-        ^ Transvalor S.A, Biot, France
+        ^ Transvalor S.A, Sophia Antipolis, France
         
         Corresponding authors: asanfilippo@hbku.edu.qa
         
@@ -58,7 +58,7 @@ def main():
     print('Load the data')
     
     # Access data store
-    data_store = pd.HDFStore('./input_data/DEFCOV_dataset_merra.h5') #DEFCOV_dataset
+    data_store = pd.HDFStore('./input_data/DEFCOV_dataset_merra.h5')
     
     # Retrieve data using the key
     data = data_store['covid_key']
@@ -140,7 +140,7 @@ def main():
         
     fig.tight_layout()
     
-    fig.savefig('./figures/merra_Figure 3.tif', dpi=300)
+    fig.savefig('./figures/Fig 3.tif', dpi=300)
 
 
 
