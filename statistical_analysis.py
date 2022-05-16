@@ -10,7 +10,7 @@ Created on Thu Apr  7 09:56:06 2022
         Hamad Bin Khalifa University (HBKU), Qatar Foundation, 
         P.O. Box 34110, Doha, Qatar
         
-        ^ Transvalor S.A, Biot, France
+        ^ Transvalor S.A, Sophia Antipolis, France
         
         Corresponding authors: asanfilippo@hbku.edu.qa
         
@@ -115,6 +115,7 @@ def main():
     # save the results     
     results_stat.to_csv('./results_csv/stat_results.csv', index=False)
         
+        
     ## 4. Plot the results
     
     print('plotting the results')
@@ -176,7 +177,7 @@ def main():
         
         fig.tight_layout()
         
-        fig.savefig('./figures/merra_'+fig_name, dpi=300)
+        fig.savefig('./figures/'+fig_name, dpi=300)
     
     
 if __name__ == "__main__":
