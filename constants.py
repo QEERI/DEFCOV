@@ -10,7 +10,7 @@ Created on Thu Apr  7 09:56:06 2022
         Hamad Bin Khalifa University (HBKU), Qatar Foundation, 
         P.O. Box 34110, Doha, Qatar
         
-        ^ Transvalor S.A, Biot, France
+        ^ Transvalor S.A, Sophia Antipolis, France
         
         Corresponding authors: asanfilippo@hbku.edu.qa
         
@@ -40,13 +40,9 @@ climatic_var = [
     'Wind speed_7',
     'Rainfall_7',
     'Short-wave irradiation_7',
-    # 'GHI_7',
-    # 'UV-B_7',
-    # 'UV-A_7',
     'PM2P5_7',
     'PM10_7',
     'UV_7',
-    # 'UVindex_7'
     ]
 
 policy_var = [
@@ -62,7 +58,6 @@ policy_var = [
     'H2_Testing policy_7',
     'H3_Contact tracing_7',
     'H6_Facial Coverings_7',
-    # 'H7_Vaccination policy_7',
     'StringencyIndex_7',
     'ContainmentHealthIndex_7'
     ]
