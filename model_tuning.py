@@ -10,7 +10,7 @@ Created on Thu Apr  7 14:45:53 2022
         Hamad Bin Khalifa University (HBKU), Qatar Foundation, 
         P.O. Box 34110, Doha, Qatar
         
-        ^ Transvalor S.A, Biot, France
+        ^ Transvalor S.A, Sophia Antipolis, France
         
         Corresponding authors: asanfilippo@hbku.edu.qa
         
@@ -69,7 +69,6 @@ def xgb_mape(preds, dtrain):
    labels = dtrain.get_label()
    
    return('smape', np.mean(np.abs(preds - labels)/((np.abs(labels)+np.abs(preds))/2)))
-
 
 
 
@@ -338,7 +337,6 @@ def main(run_CV=False, run_comparison_per_loc=False):
         score_col = ['score_'+str(i) for i in range(5)]
         iter_col = ['iter_'+str(i) for i in range(5)]
         
-        '''
     
         ## 2. hyperparameter tuning process - 
         
@@ -683,10 +681,7 @@ def main(run_CV=False, run_comparison_per_loc=False):
                 np.mean(score_iteration),
                 np.mean()(round_iteration)] + score_iteration + round_iteration
         
-        ###############################################################################
-    
-        '''
-        
+        ###############################################################################       
     
         
     ## 3. compare the base and optimized models
@@ -699,7 +694,6 @@ def main(run_CV=False, run_comparison_per_loc=False):
     params['colsample_bytree'] = 1
     params['gamma'] = 0.2
     
-
     
     # select 22 countries for validation set, the remaining for training 
     rand_val_list = remaining_countries_names['name'].sample(22,
@@ -707,7 +701,8 @@ def main(run_CV=False, run_comparison_per_loc=False):
         
     # prepare the training, validation and test data
     train_data = cv_data.loc[~cv_data['name'].isin(rand_val_list)][explanatory_var + [dependent_var]].dropna()
-    val_data = cv_data.loc[cv_data['name'].isin(rand_val_list)]
+    
+    val_data = cv_data.loc[cv_data['name'].isin(rand_val_list)][explanatory_var + [dependent_var]].dropna()
     
     test_data = test_data[explanatory_var + [dependent_var]].dropna()
     
@@ -793,7 +788,7 @@ def main(run_CV=False, run_comparison_per_loc=False):
     
     # train set
     
-    actual = y_train.values                     # actual values
+    actual = y_train.values                              # actual values
     
     lasso_pred = lasso_model.predict(X_train)            # prediction lasso model
     
@@ -801,9 +796,9 @@ def main(run_CV=False, run_comparison_per_loc=False):
     
     randForr_pred = randForr_model.predict(X_train)      # prediction random Forrest model
     
-    xgb_pred_base = xgb_base_model.predict(X_train)     # prediction base model
+    xgb_pred_base = xgb_base_model.predict(X_train)      # prediction base model
     
-    xgb_pred_opt = xgb_opt_model.predict(dtrain)        # prediction optimized model
+    xgb_pred_opt = xgb_opt_model.predict(dtrain)         # prediction optimized model
     
     
     
@@ -825,19 +820,55 @@ def main(run_CV=False, run_comparison_per_loc=False):
     
     print('')
     
+    
+    # val set
+    
+    actual = y_val.values                              # actual values
+    
+    lasso_pred = lasso_model.predict(X_val)            # prediction lasso model
+    
+    elNet_pred = elNet_model.predict(X_val)            # prediction elasticNet model
+    
+    randForr_pred = randForr_model.predict(X_val)      # prediction random Forrest model
+    
+    xgb_pred_base = xgb_base_model.predict(X_val)      # prediction base model
+    
+    xgb_pred_opt = xgb_opt_model.predict(dval)         # prediction optimized model
+    
+    
+    
+    lasso_SMAPE_val_base, lasso_std = evaluate_score(actual, lasso_pred)
+    
+    elNet_SMAPE_val_base, elNet_std = evaluate_score(actual, elNet_pred)
+    
+    randForr_SMAPE_val_base, randForr_std = evaluate_score(actual, randForr_pred)
+    
+    xgb_SMAPE_val_base, xgb_std_base = evaluate_score(actual, xgb_pred_base)
+        
+    xgb_SMAPE_val_opt, xgb_std_opt = evaluate_score(actual, xgb_pred_opt)
+    
+    print('Lasso model val score: '+str(round(lasso_SMAPE_val_base,3)) +'  '+str(round(lasso_std,3)) )
+    print('ElasticNet model val score: '+str(round(elNet_SMAPE_val_base,3)) +'  '+str(round(elNet_std,3)) )
+    print('RandomForrest model val score: '+str(round(randForr_SMAPE_val_base,3)) +'  '+str(round(randForr_std,3)) )
+    print('Xgboost Base model val score: '+str(round(xgb_SMAPE_val_base,3)) +'  '+str(round(xgb_std_base,3)) )
+    print('Xgboost OPT model val score: '+str(round(xgb_SMAPE_val_opt,3)) +'  '+str(round(xgb_std_opt,3)) )
+    
+    print('')
+    
+    
     # test set
     
-    actual = y_test.values                      # actual values
+    actual = y_test.values                               # actual values
     
     lasso_pred = lasso_model.predict(X_test)             # prediction lasso model
     
     elNet_pred = elNet_model.predict(X_test)             # prediction lasso model
     
-    randForr_pred = randForr_model.predict(X_test)      # prediction random Forrest model
+    randForr_pred = randForr_model.predict(X_test)       # prediction random Forrest model
     
-    xgb_pred_base = xgb_base_model.predict(X_test)      # prediction base model
+    xgb_pred_base = xgb_base_model.predict(X_test)       # prediction base model
     
-    xgb_pred_opt = xgb_opt_model.predict(dtest)         # prediction optimized model
+    xgb_pred_opt = xgb_opt_model.predict(dtest)          # prediction optimized model
     
     
     
@@ -871,8 +902,6 @@ def main(run_CV=False, run_comparison_per_loc=False):
     # Xgboost Base model test score: 0.365  0.355
     # Xgboost OPT model test score: 0.288  0.254
     
-    
-    '''
     
     ## 4. evaluate the optimal model for each single location
     
@@ -1026,7 +1055,7 @@ def main(run_CV=False, run_comparison_per_loc=False):
     
     fig.tight_layout()
     
-    fig.savefig('./figures/merra_Figure 1.tif', dpi=300)
+    fig.savefig('./figures/Fig 1.tif', dpi=300)
     
     
     
@@ -1097,9 +1126,8 @@ def main(run_CV=False, run_comparison_per_loc=False):
     ax.set_ylabel('SMAPE [%]')
     fig.tight_layout()
        
-    fig.savefig('./figures/merra_Figure 2.tif', dpi=300)
+    fig.savefig('./figures/Fig 2.tif', dpi=300)
     
-    '''
           
 
 if __name__ == "__main__":
@@ -1110,21 +1138,8 @@ if __name__ == "__main__":
     
     # if set to False the script will use the saved results from previous runs
     
-    a = main(run_CV=True, run_comparison_per_loc=False)
+    main(run_CV=False, run_comparison_per_loc=False)
  
     
+ 
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
