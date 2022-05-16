@@ -1,11 +1,13 @@
 # DEFCOV
 Public repository of the study "Does climate help modeling COVID-19 risk and to what extent?"
 
-@authors: Giovanni Scabbia_1, Antonio Sanfilippo_1,*, Annamaria Mazzoni_1, Dunia Bachour_1, Daniel Perez-Astudillo_1, Veronica Bermudez_1, Etienne Wey_2, Mathilde Marchand-Lasserre_2, Laurent Saboret_2
+@authors: Giovanni Scabbia*, Antonio Sanfilippo*, Annamaria Mazzoni*, 
+          Dunia Bachour*, Daniel Perez-Astudillo*, Veronica Bermudez*, 
+          Etienne Wey^, Mathilde Marchand-Lasserre^, Laurent Saboret^
 
-        1 Qatar Environment and Energy Research Institute, Hamad Bin Khalifa University – Qatar Foundation, Doha, Qatar
+        * Qatar Environment and Energy Research Institute, Hamad Bin Khalifa University – Qatar Foundation, Doha, Qatar
 
-        2 Transvalor S.A, Sophia Antipolis, France
+        ^ Transvalor S.A, Sophia Antipolis, France
         
         Corresponding authors: asanfilippo@hbku.edu.qa
 
