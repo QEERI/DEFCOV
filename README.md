@@ -5,7 +5,7 @@ Public repository of the study "Does climate help modeling COVID-19 risk and to 
 
         1 Qatar Environment and Energy Research Institute, Hamad Bin Khalifa University – Qatar Foundation, Doha, Qatar
 
-        2 Transvalor S.A, Biot, France
+        2 Transvalor S.A, Sophia Antipolis, France
         
         Corresponding authors: asanfilippo@hbku.edu.qa
 
