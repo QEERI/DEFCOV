@@ -50,7 +50,7 @@ def main():
     print('Load the data')
     
     # Access data store
-    data_store = pd.HDFStore('./input_data/DEFCOV_dataset_merra.h5')  #DEFCOV_dataset
+    data_store = pd.HDFStore('./input_data/DEFCOV_dataset_merra.h5')
     
     # Retrieve data using the key
     data = data_store['covid_key']
@@ -127,11 +127,11 @@ def main():
         if coeff == 'coef_sp':
             p_val = 'p_sp'
             title = "Spearman's correlation"
-            fig_name = 'Figure 4.tif'
+            fig_name = 'Fig 4.tif'
         else :
             p_val = 'p_ke'
             title = "Kendall's correlation"
-            fig_name = 'Figure 5.tif'
+            fig_name = 'Fig 5.tif'
             
         temp_res = results_stat.loc[results_stat[p_val] <= 0.01]
             
