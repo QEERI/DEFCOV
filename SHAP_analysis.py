@@ -10,7 +10,7 @@ Created on Wed Apr 13 13:52:13 2022
         Hamad Bin Khalifa University (HBKU), Qatar Foundation, 
         P.O. Box 34110, Doha, Qatar
         
-        ^ Transvalor S.A, Biot, France
+        ^ Transvalor S.A, Sophia Antipolis, France
         
         Corresponding authors: asanfilippo@hbku.edu.qa
         
@@ -63,7 +63,7 @@ def main():
     print('Load the data')
     
     # Access data store
-    data_store = pd.HDFStore('./input_data/DEFCOV_dataset_merra.h5') #DEFCOV_dataset
+    data_store = pd.HDFStore('./input_data/DEFCOV_dataset_merra.h5')
     
     # Retrieve data using the key
     data = data_store['covid_key']
@@ -84,31 +84,9 @@ def main():
     # design the model (using the tuned hyperparameters)
     xgb_model = xgb.XGBRegressor(
         learning_rate = 0.1,      # 0.01 - 0.3
-        max_depth = 10,             # 3 - 10
+        max_depth = 10,           # 3 - 10
         min_child_weight = 7,     # 1 - 10
-        gamma = 0.2,                # 0 - 0.4
-        subsample = 1,            # 0.5 - 1
-        colsample_bytree= 1,      # 0.3 - 1  
-        n_jobs = 30,
-        n_estimators  = 30,
-        objective = 'reg:squarederror')
-    
-    xgb_model_north = xgb.XGBRegressor(
-        learning_rate = 0.1,      # 0.01 - 0.3
-        max_depth = 10,             # 3 - 10
-        min_child_weight = 7,     # 1 - 10
-        gamma = 0.2,                # 0 - 0.4
-        subsample = 1,            # 0.5 - 1
-        colsample_bytree= 1,      # 0.3 - 1  
-        n_jobs = 30,
-        n_estimators  = 30,
-        objective = 'reg:squarederror')
-    
-    xgb_model_south = xgb.XGBRegressor(
-        learning_rate = 0.1,      # 0.01 - 0.3
-        max_depth = 10,             # 3 - 10
-        min_child_weight = 7,     # 1 - 10
-        gamma = 0.2,                # 0 - 0.4
+        gamma = 0.2,              # 0 - 0.4
         subsample = 1,            # 0.5 - 1
         colsample_bytree= 1,      # 0.3 - 1  
         n_jobs = 30,
@@ -147,11 +125,7 @@ def main():
     
     # fit the models
     
-    xgb_model_all = xgb_model.fit(data[explanatory_var], data[dependent_var], eval_metric=xgb_mape)
-    
-    xgb_model_north = xgb_model_north.fit(data_north[explanatory_var], data_north[dependent_var], eval_metric=xgb_mape)
-    
-    xgb_model_south = xgb_model_south.fit(data_south[explanatory_var], data_south[dependent_var], eval_metric=xgb_mape)
+    xgb_model = xgb_model.fit(data[explanatory_var], data[dependent_var], eval_metric=xgb_mape)
     
     lasso_model.fit(data_noNA[explanatory_var], data_noNA[dependent_var])
     
@@ -162,11 +136,11 @@ def main():
     
     ## 3. Run SHAP Analysis - feature importance
     
-    shap_values = shap.TreeExplainer(xgb_model_all).shap_values(data[explanatory_var], check_additivity=False)
+    shap_values = shap.TreeExplainer(xgb_model).shap_values(data[explanatory_var], check_additivity=False)
     
-    shap_values_north = shap.TreeExplainer(xgb_model_north).shap_values(data_north[explanatory_var], check_additivity=False)
+    shap_values_north = shap.TreeExplainer(xgb_model).shap_values(data_north[explanatory_var], check_additivity=False)
     
-    shap_values_south = shap.TreeExplainer(xgb_model_south).shap_values(data_south[explanatory_var], check_additivity=False)
+    shap_values_south = shap.TreeExplainer(xgb_model).shap_values(data_south[explanatory_var], check_additivity=False)
     
     ## 4. plot the results
     
@@ -184,7 +158,8 @@ def main():
     ax1.set_xlabel('mean(|SHAP value|) - log-scale') #average impact on model output magnitude (log-scale)
     fig1.tight_layout()
     
-    fig1.savefig('./figures/merra_Figure 6.tif', dpi=300)
+    fig1.savefig('./figures/Fig 6.tif', dpi=300)
+    
     
     # scatter plot
     
@@ -204,7 +179,7 @@ def main():
     
     fig2.tight_layout()
     
-    fig2.savefig('./figures/merra_Figure 7.tif', dpi=300)
+    fig2.savefig('./figures/Fig 7.tif', dpi=300)
     
     
     # other models
@@ -288,7 +263,7 @@ def main():
     
     fig4.tight_layout()
     
-    fig4.savefig('./figures/merra_Figure S3.tif', dpi=300)
+    fig4.savefig('./figures/Fig S3.tif', dpi=300)
     
     plt.show()
     
@@ -309,7 +284,7 @@ def main():
     
     ax5_0.set_xlabel('SHAP value (impact on model output)')
     ax5_0.set_title('Northern hemisphere countries')
-    ax5_0.set_xlim(-100,100)
+    ax5_0.set_xlim(-175,175)
     
     ax5_1 = fig5.add_subplot(122)
     
@@ -323,11 +298,11 @@ def main():
     
     ax5_1.set_xlabel('SHAP value (impact on model output)')
     ax5_1.set_title('Southern hemisphere countries')
-    ax5_1.set_xlim(-100, 100)
+    ax5_1.set_xlim(-80, 80)
     
     fig5.tight_layout()
     
-    fig5.savefig('./figures/merra_Figure S4.tif', dpi=300)
+    fig5.savefig('./figures/Fig S4.tif', dpi=300)
     
     plt.show()
 
